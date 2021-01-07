@@ -1,90 +1,106 @@
-class Tictactoe(object):
-    game_board = {'TL': ' ', 'TM': ' ', 'TR': ' ',
-                  'ML': ' ', 'MM': ' ', 'MR': ' ',
-                  'BL': ' ', 'BM': ' ', 'BR': ' '}
-
-    def print_board(self, game_board):
-        print(game_board['TL'] + '|' + game_board['TM'] + '|' + game_board['TR'])
-        print('-+-+-')
-        print(game_board['ML'] + '|' + game_board['MM'] + '|' + game_board['MR'])
-        print('-+-+-')
-        print(game_board['BL'] + '|' + game_board['BM'] + '|' + game_board['BR'])
-
-    def player1_pick(self):
-        while self.player1_pick != 'X' and self.player1_pick != 'O':
-            self.player1_pick = input("Player 1, choose X or O > ")
-        print(f"Player 1 is > {self.player1_pick}")
-        return self.player1_pick
-
-    def player2_pick(self, player1_pick):
-        if self.player1_pick == 'X':
-            self.player2_pick = 'O'
-        else:
-            self.player2_pick = 'X'
-        print(f"Player 2 is > {self.player2_pick}")
-        return self.player2_pick
-
-    def player1_move(self):
-        self.player1_move = input(f"Player 1 > ")
-        print(f"Player 1 move is > {self.player1_move}")
-        return self.player1_move
-
-    def player2_move(self):
-        self.player2_move = input(f"Player 2 > ")
-        print(f"Player 2 move is > {self.player2_move}")
-        return self.player2_move
-
-    def update_game_board(self, game_board, player_move, player_pick):
-        self.player_move = player_move
-        self.game_board = game_board
-        self.player_pick = player_pick
-        self.game_board[self.player_move] = self.player_pick
-        # print(self.game_board)
-        # print(self.print_board)
-        return self.game_board
-    
-    win_combinations = [['X', ' ', ' ',
-                         'X', ' ', ' ',
-                         'X', ' ', ' '],
-                        [' ', 'X', ' ',
-                         ' ', 'X', ' ',
-                         ' ', 'X', ' '],
-                        [' ', ' ', 'X',
-                         ' ', ' ', 'X',
-                         ' ', ' ', 'X'],
-                        ['X', ' ', ' ',
-                         ' ', 'X', ' ',
-                         ' ', ' ', 'X'],
-                        [' ', ' ', 'X',
-                         ' ', 'X', ' ',
-                         'X', ' ', ' '],
-                        ['X', 'X', 'X',
-                         ' ', ' ', ' ',
-                         ' ', ' ', ' '],
-                        [' ', ' ', ' ',
-                         'X', 'X', 'X',
-                         ' ', ' ', ' '],
-                        [' ', ' ', ' ',
-                         ' ', ' ', ' ',
-                         'X', 'X', 'X']]
 
 
-new_game = Tictactoe()
-board = new_game.game_board
-# new_print_board = new_game.print_board(board)
-new_player1_pick = new_game.player1_pick()
-new_player2_pick = new_game.player2_pick(new_player1_pick)
+game_board = {'TL': ' ', 'TM': ' ', 'TR': ' ',
+                'ML': ' ', 'MM': ' ', 'MR': ' ',
+                'BL': ' ', 'BM': ' ', 'BR': ' '}
 
-while list(game_board.values())
+game_board_positions = {'TL': 'TL', 'TM': 'TM', 'TR': 'TR',
+                        'ML': 'ML', 'MM': 'MM', 'MR': 'MR',
+                        'BL': 'BL', 'BM': 'BM', 'BR': 'BR'}
+
+play = input("Hello. Would you like to play Tic-Tac-Toe? Y or N > ")
+
+def print_board(board):
+    print(board['TL'] + '|' + board['TM'] + '|' + board['TR'])
+    print('-+-+-')
+    print(board['ML'] + '|' + board['MM'] + '|' + board['MR'])
+    print('-+-+-')
+    print(board['BL'] + '|' + board['BM'] + '|' + board['BR'])
+
+def init_players():
+    player1_pick = ' '
+    while player1_pick != 'X' and player1_pick != 'O':
+        player1_pick = input("Player 1, choose X or O > ")
+    print(f"Player 1 is > {player1_pick}")
+    player1_name = input("Player 1 name > ")
+    if player1_pick == 'X':
+        player2_pick = 'O'
+    else:
+        player2_pick = 'X'
+    print(f"Player 2 is > {player2_pick}")
+    player2_name = input("Player 2 name > ")
+    return player1_pick, player1_name, player2_pick, player2_name
+
+if play == 'Y':
+    players = init_players()
+else:
+    print('Goodbye.')
+    exit()
+
+print("Players can choose the following positions during game play:")
+print_board(game_board_positions)
+
+
+def check_win():
+    if game_board['TL'] == 'X' and game_board['TM'] == 'X' and game_board['TR'] == 'X':
+        return True
+    elif game_board['ML'] == 'X' and game_board['MM'] == 'X' and game_board['MR'] == 'X':
+        return True
+    elif game_board['BL'] == 'X' and game_board['BM'] == 'X' and game_board['BR'] == 'X':
+        return True
+    elif game_board['TL'] == 'O' and game_board['TM'] == 'O' and game_board['TR'] == 'O':
+        return True
+    elif game_board['ML'] == 'O' and game_board['MM'] == 'O' and game_board['MR'] == 'O':
+        return True
+    elif game_board['BL'] == 'O' and game_board['BM'] == 'O' and game_board['BR'] == 'O':
+        return True
+    elif game_board['TL'] == 'X' and game_board['ML'] == 'X' and game_board['BL'] == 'X':
+        return True
+    elif game_board['TM'] == 'X' and game_board['MM'] == 'X' and game_board['BM'] == 'X':
+        return True
+    elif game_board['TR'] == 'X' and game_board['MR'] == 'X' and game_board['BR'] == 'X':
+        return True
+    elif game_board['TL'] == 'O' and game_board['ML'] == 'O' and game_board['BL'] == 'O':
+        return True
+    elif game_board['TM'] == 'O' and game_board['MM'] == 'O' and game_board['BM'] == 'O':
+        return True
+    elif game_board['TR'] == 'O' and game_board['MR'] == 'O' and game_board['BR'] == 'O':
+        return True
+    elif game_board['TL'] == 'X' and game_board['MM'] == 'X' and game_board['BR'] == 'X':
+        return True
+    elif game_board['TR'] == 'X' and game_board['MM'] == 'X' and game_board['BL'] == 'X':
+        return True
+    elif game_board['TL'] == 'O' and game_board['MM'] == 'O' and game_board['BR'] == 'O':
+        return True
+    elif game_board['TR'] == 'O' and game_board['MM'] == 'O' and game_board['BL'] == 'O':
+        return True
+    else:
+        return False
+
+
 for i in range(9):
+    if i % 2 == 0:
+        player1_move = input(f"{players[1]} choose your move > ")
+        while game_board[player1_move] != ' ':
+            print(f"Can't play at {player1_move}")
+            player1_move = input(f"{players[1]} choose your move > ")
+        print(f"Move is > {player1_move}")
+        game_board[player1_move] = players[0]
+        print_board(game_board)
+        if check_win() == True:
+            print(f"{players[1]} wins!")
+            break
+    else:
+        player2_move = input(f"{players[3]} choose your move > ")
+        while game_board[player2_move] != ' ':
+            print(f"Can't play at {player2_move}")
+            player2_move = input(f"{players[3]} choose your move > ")
+        print(f"Move is > {player2_move}")
+        game_board[player2_move] = players[2]
+        print_board(game_board)
+        if check_win() == True:
+            print(f"{players[3]} wins!")
+            break
 
-
-new_player1_move = new_game.player1_move()
-updated_game_board = new_game.update_game_board(board, new_player1_move, new_player1_pick)
-update_print_board = new_game.print_board(board)
-new_player2_move = new_game.player2_move()
-updated_game_board = new_game.update_game_board(board, new_player2_move, new_player2_pick)
-update_print_board = new_game.print_board(board)
-
-
+# game_play(players, game_board)
 
