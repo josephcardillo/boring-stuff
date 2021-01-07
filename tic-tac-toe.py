@@ -1,5 +1,3 @@
-
-
 game_board = {'TL': ' ', 'TM': ' ', 'TR': ' ',
                 'ML': ' ', 'MM': ' ', 'MR': ' ',
                 'BL': ' ', 'BM': ' ', 'BR': ' '}
@@ -101,6 +99,3 @@ for i in range(9):
         if check_win() == True:
             print(f"{players[3]} wins!")
             break
-
-# game_play(players, game_board)
-
