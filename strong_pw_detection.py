@@ -1,3 +1,5 @@
+#! /usr/bin/python3
+
 # Strong Password Detection
 # Automate the Boring Stuff - Ch. 7 Exercise
 
